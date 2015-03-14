@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="client.h" />
     <ClInclude Include="gsnet.h" />
+    <ClInclude Include="init.h" />
     <ClInclude Include="select.h" />
     <ClInclude Include="server.h" />
     <ClInclude Include="socket.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="tcpsocket.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="init.cpp" />
     <ClCompile Include="tcpclient.cpp" />
     <ClCompile Include="tcpselect.cpp" />
     <ClCompile Include="tcpserver.cpp" />

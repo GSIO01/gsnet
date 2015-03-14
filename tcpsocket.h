@@ -35,11 +35,6 @@ namespace gsnet {
 
 		SOCKET _s;
 		int32_t* _refCounter;
-
-	private:
-		static bool start();
-		static void end();
-		static int32_t _nofSockets;
 	};
 
 

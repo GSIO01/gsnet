@@ -1,30 +1,14 @@
 #include "tcpsocket.h"
 #include <iostream>
 
+#include "init.h"
+
 namespace gsnet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	int32_t tcpsocket::_nofSockets = 0;
-
-	bool tcpsocket::start() {
-		if (_nofSockets == 0) {
-			WSADATA info;
-			if (WSAStartup(MAKEWORD(2, 2), &info) != 0) {
-				return false;
-			}
-		}
-
-		++_nofSockets;
-		return true;
-	}
-
-	void tcpsocket::end() {
-		WSACleanup();
-	}
-
 	tcpsocket::tcpsocket() : _s(0) {
-		start();
+		init::instance()->start();
 
 		_s = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -36,7 +20,7 @@ namespace gsnet {
 	}
 
 	tcpsocket::tcpsocket(SOCKET s) : _s(s) {
-		start();
+		init::instance()->start();
 		_refCounter = new int32_t(1);
 	}
 
@@ -46,10 +30,7 @@ namespace gsnet {
 			delete _refCounter;
 		}
 
-		--_nofSockets;
-		if (_nofSockets == 0) {
-			end();
-		}
+		init::instance()->end();
 	}
 
 	tcpsocket::tcpsocket(const tcpsocket& other) {
@@ -57,7 +38,7 @@ namespace gsnet {
 		(*_refCounter)++;
 		_s = other._s;
 
-		_nofSockets++;
+		init::instance()->start();
 	}
 
 	tcpsocket& tcpsocket::operator =(const tcpsocket& rhs) {
@@ -65,7 +46,7 @@ namespace gsnet {
 		_refCounter = rhs._refCounter;
 		_s = rhs._s;
 
-		_nofSockets++;
+		init::instance()->start();
 
 		return *this;
 	}
