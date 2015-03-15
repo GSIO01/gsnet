@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsnet", "gsnet.vcxproj", "{396AA1F4-84A5-428D-8806-BDE6352A308E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple_client", "examples\simple_client\simple_client.vcxproj", "{5A651611-FDBA-4032-BDA6-1C9FC520B9B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{396AA1F4-84A5-428D-8806-BDE6352A308E}.Debug|Win32.Build.0 = Debug|Win32
 		{396AA1F4-84A5-428D-8806-BDE6352A308E}.Release|Win32.ActiveCfg = Release|Win32
 		{396AA1F4-84A5-428D-8806-BDE6352A308E}.Release|Win32.Build.0 = Release|Win32
+		{5A651611-FDBA-4032-BDA6-1C9FC520B9B1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5A651611-FDBA-4032-BDA6-1C9FC520B9B1}.Debug|Win32.Build.0 = Debug|Win32
+		{5A651611-FDBA-4032-BDA6-1C9FC520B9B1}.Release|Win32.ActiveCfg = Release|Win32
+		{5A651611-FDBA-4032-BDA6-1C9FC520B9B1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
