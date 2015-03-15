@@ -88,6 +88,10 @@
     <ClInclude Include="tcpselect.h" />
     <ClInclude Include="tcpserver.h" />
     <ClInclude Include="tcpsocket.h" />
+    <ClInclude Include="udpclient.h" />
+    <ClInclude Include="udpselect.h" />
+    <ClInclude Include="udpserver.h" />
+    <ClInclude Include="udpsocket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="init.cpp" />
@@ -95,6 +99,10 @@
     <ClCompile Include="tcpselect.cpp" />
     <ClCompile Include="tcpserver.cpp" />
     <ClCompile Include="tcpsocket.cpp" />
+    <ClCompile Include="udpclient.cpp" />
+    <ClCompile Include="udpselect.cpp" />
+    <ClCompile Include="udpserver.cpp" />
+    <ClCompile Include="udpsocket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-#include "tcpsocket.h"
+#include "udpsocket.h"
 
 #include <iostream>
 
@@ -8,10 +8,10 @@ namespace gsnet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	tcpsocket::tcpsocket() : _s(0) {
+	udpsocket::udpsocket() : _s(0) {
 		init::instance()->start();
 
-		_s = socket(AF_INET, SOCK_STREAM, 0);
+		_s = socket(AF_INET, SOCK_DGRAM, 0);
 
 		if (_s == INVALID_SOCKET) {
 			return;
@@ -20,12 +20,12 @@ namespace gsnet {
 		_refCounter = new int32_t(1);
 	}
 
-	tcpsocket::tcpsocket(SOCKET s) : _s(s) {
+	udpsocket::udpsocket(SOCKET s) : _s(s) {
 		init::instance()->start();
 		_refCounter = new int32_t(1);
 	}
 
-	tcpsocket::~tcpsocket() {
+	udpsocket::~udpsocket() {
 		if (--(*_refCounter) == 0) {
 			close();
 			delete _refCounter;
@@ -34,7 +34,7 @@ namespace gsnet {
 		init::instance()->end();
 	}
 
-	tcpsocket::tcpsocket(const tcpsocket& other) {
+	udpsocket::udpsocket(const udpsocket& other) {
 		_refCounter = other._refCounter;
 		(*_refCounter)++;
 		_s = other._s;
@@ -42,7 +42,7 @@ namespace gsnet {
 		init::instance()->start();
 	}
 
-	tcpsocket& tcpsocket::operator =(const tcpsocket& rhs) {
+	udpsocket& udpsocket::operator =(const udpsocket& rhs) {
 		(*rhs._refCounter)++;
 		_refCounter = rhs._refCounter;
 		_s = rhs._s;
@@ -52,11 +52,11 @@ namespace gsnet {
 		return *this;
 	}
 
-	void tcpsocket::close() {
+	void udpsocket::close() {
 		closesocket(_s);
 	}
 
-	std::string tcpsocket::receiveBytes() {
+	std::string udpsocket::receiveBytes() {
 		std::string ret;
 		char buffer[1024];
 
@@ -88,7 +88,7 @@ namespace gsnet {
 		return ret;
 	}
 
-	std::string tcpsocket::receiveLine() {
+	std::string udpsocket::receiveLine() {
 		std::string ret;
 
 		for (;;) {
@@ -110,18 +110,18 @@ namespace gsnet {
 		return ret;
 	}
 
-	void tcpsocket::sendLine(std::string line) {
+	void udpsocket::sendLine(std::string line) {
 		line += '\n';
 		send(_s, line.c_str(), line.length(), 0);
 	}
 
-	void tcpsocket::sendBytes(const std::string& bytes) {
+	void udpsocket::sendBytes(const std::string& bytes) {
 		send(_s, bytes.c_str(), bytes.length(), 0);
 	}
 
 #else
 
-	// TODO POSIX implementation
+	// TODO POSIX implementation here
 
 #endif
 

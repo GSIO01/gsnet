@@ -1,5 +1,5 @@
-#ifndef _TCPSOCKET_H
-#define _TCPSOCKET_H
+#ifndef _UDPSOCKET_H
+#define _UDPSOCKET_H
 
 #include "gsnet.h"
 #include "socket.h"
@@ -11,30 +11,28 @@ namespace gsnet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	class GSNET_API tcpsocket : public isocket {
+	class GSNET_API udpsocket : public isocket {
 	public:
-		tcpsocket(const tcpsocket& other);
-		virtual ~tcpsocket();
+		udpsocket(const udpsocket& other);
+		virtual ~udpsocket();
 
-		tcpsocket& operator=(const tcpsocket& rhs);
+		udpsocket& operator=(const udpsocket& rhs);
 
 		virtual std::string receiveLine() override;
 		virtual std::string receiveBytes() override;
 		virtual void close() override;
 		virtual void sendLine(std::string line) override;
 		virtual void sendBytes(const std::string& bytes) override;
-
 	protected:
-		friend class tcpserver;
-		friend class tcpselect;
+		friend class udpserver;
+		friend class udpselect;
 
-		tcpsocket(SOCKET s);
-		tcpsocket();
+		udpsocket(SOCKET s);
+		udpsocket();
 
 		SOCKET _s;
 		int32_t* _refCounter;
 	};
-
 
 #else
 
@@ -44,4 +42,4 @@ namespace gsnet {
 
 }
 
-#endif /* _TCPSOCKET_H */
+#endif /* _UDPSOCKET_H */

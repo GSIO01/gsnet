@@ -13,54 +13,96 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\tcp">
+      <UniqueIdentifier>{0ce2818a-955d-41ad-afe2-5aa7c07178a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tcp">
+      <UniqueIdentifier>{20fa15f7-5b88-46b1-b658-f744c7ee28bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\base">
+      <UniqueIdentifier>{605a233d-bc24-42ef-b3e4-7382a0655fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\base">
+      <UniqueIdentifier>{e2145742-897c-424e-bf5f-4237a2ce738c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\udp">
+      <UniqueIdentifier>{4681e5cc-27a1-4fc3-bcfb-ea32f5f68bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\udp">
+      <UniqueIdentifier>{52563e7a-70ed-4f1a-8d2c-106b6e3b64fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gsnet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tcpsocket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="socket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="server.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="client.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="select.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tcpclient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tcpserver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\tcp</Filter>
     </ClInclude>
     <ClInclude Include="tcpselect.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="tcpserver.h">
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="tcpsocket.h">
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="client.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="gsnet.h">
+      <Filter>Header Files\base</Filter>
     </ClInclude>
     <ClInclude Include="init.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="select.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="server.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="socket.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="udpsocket.h">
+      <Filter>Header Files\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="udpclient.h">
+      <Filter>Header Files\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="udpserver.h">
+      <Filter>Header Files\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="udpselect.h">
+      <Filter>Header Files\udp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tcpsocket.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tcpclient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tcpserver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\tcp</Filter>
     </ClCompile>
     <ClCompile Include="tcpselect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="tcpserver.cpp">
+      <Filter>Source Files\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="tcpsocket.cpp">
+      <Filter>Source Files\tcp</Filter>
     </ClCompile>
     <ClCompile Include="init.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="udpsocket.cpp">
+      <Filter>Source Files\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="udpclient.cpp">
+      <Filter>Source Files\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="udpserver.cpp">
+      <Filter>Source Files\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="udpselect.cpp">
+      <Filter>Source Files\udp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
