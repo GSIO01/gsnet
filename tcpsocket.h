@@ -38,6 +38,30 @@ namespace gsnet {
 
 #else
 
+	class GSNET_API tcpsocket : public isocket {
+	public:
+		tcpsocket(const tcpsocket& other);
+		virtual ~tcpsocket();
+
+		tcpsocket& operator=(const tcpsocket& rhs);
+
+		virtual std::string receiveLine() override;
+		virtual std::string receiveBytes() override;
+		virtual void close() override;
+		virtual void sendLine(std::string line) override;
+		virtual void sendBytes(const std::string& bytes) override;
+
+	protected:
+		friend class tcpserver;
+		friend class tcpselect;
+
+		tcpsocket(int32_t s);
+		tcpsocket();
+
+		int32_t _s;
+		int32_t* _refCounter;
+	};
+
 	// TODO POSIX implementation here
 
 #endif
