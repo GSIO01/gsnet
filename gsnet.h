@@ -12,6 +12,8 @@
 
 #define GSNET_API
 
+#include <sys/socket.h>
+
 #endif
 
 

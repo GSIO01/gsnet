@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>client.h</itemPath>
+      <itemPath>gsnet.h</itemPath>
+      <itemPath>init.h</itemPath>
+      <itemPath>select.h</itemPath>
+      <itemPath>server.h</itemPath>
+      <itemPath>socket.h</itemPath>
+      <itemPath>tcpclient.h</itemPath>
+      <itemPath>tcpselect.h</itemPath>
+      <itemPath>tcpserver.h</itemPath>
+      <itemPath>tcpsocket.h</itemPath>
+      <itemPath>udpclient.h</itemPath>
+      <itemPath>udpselect.h</itemPath>
+      <itemPath>udpserver.h</itemPath>
+      <itemPath>udpsocket.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>init.cpp</itemPath>
+      <itemPath>tcpclient.cpp</itemPath>
+      <itemPath>tcpselect.cpp</itemPath>
+      <itemPath>tcpserver.cpp</itemPath>
+      <itemPath>tcpsocket.cpp</itemPath>
+      <itemPath>udpclient.cpp</itemPath>
+      <itemPath>udpselect.cpp</itemPath>
+      <itemPath>udpserver.cpp</itemPath>
+      <itemPath>udpsocket.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
+      </compileType>
+      <item path="client.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gsnet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="init.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="select.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="server.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="socket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpclient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpclient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpselect.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpselect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpserver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpserver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpsocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpsocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpclient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpclient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpselect.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpselect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpserver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpserver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpsocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpsocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="client.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gsnet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="init.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="select.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="server.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="socket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpclient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpclient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpselect.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpselect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpserver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpserver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tcpsocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tcpsocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpclient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpclient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpselect.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpselect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpserver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpserver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="udpsocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="udpsocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

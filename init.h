@@ -45,6 +45,8 @@ namespace gsnet {
 
 	protected:
 		init() {}
+                
+                static init _s_instance;
 	};
 
 #endif
