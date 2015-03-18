@@ -132,7 +132,7 @@ namespace gsnet {
 
   tcpsocket::tcpsocket() {
     _s = socket(AF_INET, SOCK_STREAM, 0);
-    if (_s = -1) {
+    if (_s == -1) {
       return;
     }
 

@@ -4,4 +4,27 @@
         <activeConfTypeElem>2</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/udpselect.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpserver.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpsocket.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpsocket.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpclient.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/gsnet.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/udpclient.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpserver.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpselect.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/init.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/udpselect.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/udpserver.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpclient.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/init.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/udpsocket.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/tcpselect.cpp</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/udpclient.h</file>
+            <file>file:/home/gsio01/Dokumente/prj/gsnet/udpsocket.cpp</file>
+        </group>
+    </open-files>
 </project-private>
