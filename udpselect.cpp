@@ -1,14 +1,14 @@
 #include "udpselect.h"
 
-namespace gsnet {
+namespace GSNet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-  udpselect::udpselect(const udpsocket * const s1, const udpsocket * const s2 /* = nullptr */, ESocketType type /* = ST_BLOCKING */) {
+  CUdpSelect::CUdpSelect(const CUdpSocket * const s1, const CUdpSocket * const s2 /* = nullptr */, ESocketType type /* = ST_BLOCKING */) : _lastError(SE_SUCCESS) {
     FD_ZERO(&_fds);
-    FD_SET(const_cast<udpsocket*> (s1)->_s, &_fds);
+    FD_SET(const_cast<CUdpSocket*> (s1)->_s, &_fds);
     if (s2 != nullptr) {
-      FD_SET(const_cast<udpsocket*> (s1)->_s, &_fds);
+      FD_SET(const_cast<CUdpSocket*> (s1)->_s, &_fds);
     }
 
     TIMEVAL tval;
@@ -18,22 +18,32 @@ namespace gsnet {
     TIMEVAL* ptval = (type == ST_NON_BLOCKING) ? &tval : nullptr;
 
     if (select(0, &_fds, nullptr, nullptr, ptval) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_SELECT;
     }
   }
 
-  bool udpselect::readable(const isocket * const s) {
-    const udpsocket * const sock = static_cast<const udpsocket * const> (s);
+  bool CUdpSelect::Readable(const ISocket * const s) {
+    const CUdpSocket * const sock = static_cast<const CUdpSocket * const> (s);
 
+    _lastError = SE_SUCCESS;
     return (FD_ISSET(sock->_s, &_fds)) ? true : false;
+  }
+
+  bool CUdpSelect::HasError() const {
+    return (_lastError != SE_SUCCESS);
+  }
+
+  ESocketError CUdpSelect::GetLastError() const {
+    return _lastError;
   }
 
 #else
 
-  udpselect::udpselect(const udpsocket * const s1, const udpsocket * const s2 /* = nullptr */, ESocketType type /* = ST_BLOCKING */) {
+  CUdpSelect::CUdpSelect(const CUdpSocket * const s1, const CUdpSocket * const s2 /* = nullptr */, ESocketType type /* = ST_BLOCKING */) : _lastError(SE_SUCCESS) {
     FD_ZERO(&_fds);
-    FD_SET(const_cast<udpsocket*> (s1)->_s, &_fds);
+    FD_SET(const_cast<CUdpSocket*> (s1)->_s, &_fds);
     if (s2 != nullptr) {
-      FD_SET(const_cast<udpsocket*> (s1)->_s, &_fds);
+      FD_SET(const_cast<CUdpSocket*> (s1)->_s, &_fds);
     }
 
     timeval tval;
@@ -43,13 +53,24 @@ namespace gsnet {
     timeval* ptval = (type == ST_NON_BLOCKING) ? &tval : nullptr;
 
     if (select(0, &_fds, nullptr, nullptr, ptval) == -1) {
+      _lastError = SE_ERROR_SELECT;
     }
   }
 
-  bool udpselect::readable(const isocket * const s) {
-    const udpsocket * const sock = static_cast<const udpsocket * const> (s);
+  bool CUdpSelect::Readable(const ISocket * const s) {
+    const CUdpSocket * const sock = static_cast<const CUdpSocket * const> (s);
 
+    _lastError = SE_SUCCESS;
     return (FD_ISSET(sock->_s, &_fds)) ? true : false;
+  }
+
+  bool CUdpSelect::HasError() const {
+    return (_lastError != SE_SUCCESS);
+  }
+
+  ESocketError CUdpSelect::GetLastError() const {
+    ESocketError ret = _lastError;
+    return _lastError;
   }
 
 #endif

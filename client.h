@@ -3,14 +3,14 @@
 
 #include "gsnet.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	class GSNET_API iclient {
+	class GSNET_API IClient {
 	public:
-		virtual ~iclient() { }
+		virtual ~IClient() { }
 
 	protected:
-		iclient() { }
+		IClient() { }
 	};
 
 }

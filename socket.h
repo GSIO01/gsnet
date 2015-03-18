@@ -7,25 +7,27 @@
 #include <cinttypes>
 
 
-namespace gsnet {
+namespace GSNet {
 
 	enum ESocketType {
 		ST_BLOCKING,
 		ST_NON_BLOCKING
 	};
 
-	class GSNET_API isocket {
+	class GSNET_API ISocket {
 	public:
-		virtual ~isocket() { }
+		virtual ~ISocket() { }
 
-		virtual std::string receiveLine() = 0;
-		virtual std::string receiveBytes() = 0;
-		virtual void close() = 0;
-		virtual void sendLine(std::string line) = 0;
-		virtual void sendBytes(const std::string& bytes) = 0;
+		virtual std::string ReceiveLine() = 0;
+		virtual std::string ReceiveBytes() = 0;
+		virtual ESocketError Close() = 0;
+		virtual ESocketError SendLine(std::string line) = 0;
+		virtual ESocketError SendBytes(const std::string& bytes) = 0;
+		virtual bool HasError() const = 0;
+		virtual ESocketError GetLastError() const = 0;
 
 	protected:
-		isocket() { }
+		ISocket() { }
 	};
 
 }

@@ -7,59 +7,65 @@
 #include <string>
 #include <cinttypes>
 
-namespace gsnet {
+namespace GSNet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	class GSNET_API tcpsocket : public isocket {
+	class GSNET_API CTcpSocket : public ISocket {
 	public:
-		tcpsocket(const tcpsocket& other);
-		virtual ~tcpsocket();
+		CTcpSocket(const CTcpSocket& other);
+		virtual ~CTcpSocket();
 
-		tcpsocket& operator=(const tcpsocket& rhs);
+		CTcpSocket& operator=(const CTcpSocket& rhs);
 
-		virtual std::string receiveLine() override;
-		virtual std::string receiveBytes() override;
-		virtual void close() override;
-		virtual void sendLine(std::string line) override;
-		virtual void sendBytes(const std::string& bytes) override;
+		virtual std::string ReceiveLine() override;
+		virtual std::string ReceiveBytes() override;
+		virtual ESocketError Close() override;
+		virtual ESocketError SendLine(std::string line) override;
+		virtual ESocketError SendBytes(const std::string& bytes) override;
+		virtual bool HasError() const override;
+		virtual ESocketError GetLastError() const override;
 
 	protected:
-		friend class tcpserver;
-		friend class tcpselect;
+		friend class CTcpServer;
+		friend class CTcpSelect;
 
-		tcpsocket(SOCKET s);
-		tcpsocket();
+		CTcpSocket(SOCKET s);
+		CTcpSocket();
 
 		SOCKET _s;
 		int32_t* _refCounter;
+		ESocketError _lastError;
 	};
 
 
 #else
 
-	class GSNET_API tcpsocket : public isocket {
+	class GSNET_API CTcpSocket : public ISocket {
 	public:
-		tcpsocket(const tcpsocket& other);
-		virtual ~tcpsocket();
+		CTcpSocket(const CTcpSocket& other);
+		virtual ~CTcpSocket();
 
-		tcpsocket& operator=(const tcpsocket& rhs);
+		CTcpSocket& operator=(const CTcpSocket& rhs);
 
-		virtual std::string receiveLine() override;
-		virtual std::string receiveBytes() override;
-		virtual void close() override;
-		virtual void sendLine(std::string line) override;
-		virtual void sendBytes(const std::string& bytes) override;
+		virtual std::string ReceiveLine() override;
+		virtual std::string ReceiveBytes() override;
+		virtual ESocketError Close() override;
+		virtual ESocketError SendLine(std::string line) override;
+		virtual ESocketError SendBytes(const std::string& bytes) override;
+		virtual bool HasError() const override;
+		virtual ESocketError GetLastError() const override;
 
 	protected:
-		friend class tcpserver;
-		friend class tcpselect;
+		friend class CTcpServer;
+		friend class CTcpSelect;
 
-		tcpsocket(int32_t s);
-		tcpsocket();
+		CTcpSocket(int32_t s);
+		CTcpSocket();
 
 		int32_t _s;
 		int32_t* _refCounter;
+		ESocketError _lastError;
 	};
 
 	// TODO POSIX implementation here

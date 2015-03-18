@@ -7,57 +7,64 @@
 #include <string>
 #include <cinttypes>
 
-namespace gsnet {
+namespace GSNet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	class GSNET_API udpsocket : public isocket {
+	class GSNET_API CUdpSocket : public ISocket {
 	public:
-		udpsocket(const udpsocket& other);
-		virtual ~udpsocket();
+		CUdpSocket(const CUdpSocket& other);
+		virtual ~CUdpSocket();
 
-		udpsocket& operator=(const udpsocket& rhs);
+		CUdpSocket& operator=(const CUdpSocket& rhs);
 
-		virtual std::string receiveLine() override;
-		virtual std::string receiveBytes() override;
-		virtual void close() override;
-		virtual void sendLine(std::string line) override;
-		virtual void sendBytes(const std::string& bytes) override;
+		virtual std::string ReceiveLine() override;
+		virtual std::string ReceiveBytes() override;
+		virtual ESocketError Close() override;
+		virtual ESocketError SendLine(std::string line) override;
+		virtual ESocketError SendBytes(const std::string& bytes) override;
+		virtual bool HasError() const override;
+		virtual ESocketError GetLastError() const override;
+
 	protected:
-		friend class udpserver;
-		friend class udpselect;
+		friend class CUdpServer;
+		friend class CUdpSelect;
 
-		udpsocket(SOCKET s);
-		udpsocket();
+		CUdpSocket(SOCKET s);
+		CUdpSocket();
 
 		SOCKET _s;
 		int32_t* _refCounter;
+		ESocketError _lastError;
 	};
 
 #else
 
-	class GSNET_API udpsocket : public isocket {
+	class GSNET_API CUdpSocket : public ISocket {
 	public:
-		udpsocket(const udpsocket& other);
-		virtual ~udpsocket();
+		CUdpSocket(const CUdpSocket& other);
+		virtual ~CUdpSocket();
 
-		udpsocket& operator=(const udpsocket& rhs);
+		CUdpSocket& operator=(const CUdpSocket& rhs);
 
-		virtual std::string receiveLine() override;
-		virtual std::string receiveBytes() override;
-		virtual void close() override;
-		virtual void sendLine(std::string line) override;
-		virtual void sendBytes(const std::string& bytes) override;
+		virtual std::string ReceiveLine() override;
+		virtual std::string ReceiveBytes() override;
+		virtual ESocketError Close() override;
+		virtual ESocketError SendLine(std::string line) override;
+		virtual ESocketError SendBytes(const std::string& bytes) override;
+		virtual bool HasError() const override;
+		virtual ESocketError GetLastError() const override;
 
 	protected:
-		friend class udpserver;
-		friend class udpselect;
+		friend class CUdpServer;
+		friend class CUdpSelect;
 
-		udpsocket(int32_t s);
-		udpsocket();
+		CUdpSocket(int32_t s);
+		CUdpSocket();
 
 		int32_t _s;
 		int32_t* _refCounter;
+		ESocketError _lastError;
 	};
 
 #endif

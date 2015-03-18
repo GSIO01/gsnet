@@ -3,18 +3,20 @@
 
 #include "gsnet.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	class isocket;
+	class ISocket;
 
-	class GSNET_API iselect {
+	class GSNET_API ISelect {
 	public:
-		virtual ~iselect() { }
+		virtual ~ISelect() { }
 
-		virtual bool readable(const isocket* const s) = 0;
+		virtual bool Readable(const ISocket* const s) = 0;
+    virtual bool HasError() const = 0;
+    virtual ESocketError GetLastError() const = 0;
 
 	protected:
-		iselect() { }
+		ISelect() { }
 	};
 
 }

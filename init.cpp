@@ -1,12 +1,12 @@
 #include "init.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	init init::_s_instance;
+	CInit CInit::_s_instance;
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	bool init::start() {
+	bool CInit::Start() {
 		if (_nofSockets == 0) {
 			WSADATA info;
 			if (WSAStartup(MAKEWORD(2, 2), &info) != 0) {
@@ -18,7 +18,7 @@ namespace gsnet {
 		return true;
 	}
 
-	void init::end() {
+	void CInit::End() {
 		--_nofSockets;
 
 		if (_nofSockets == 0) {

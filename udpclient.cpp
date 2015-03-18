@@ -11,12 +11,12 @@
 
 #endif
 
-namespace gsnet {
+namespace GSNet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	udpclient::udpclient(const std::string& host, int32_t port)
-		: udpsocket() {
+	CUdpClient::CUdpClient(const std::string& host, int32_t port)
+		: CUdpSocket() {
 		struct addrinfo* result = nullptr;
 		struct addrinfo hints;
 
@@ -41,8 +41,8 @@ namespace gsnet {
 
 #else
 
-	udpclient::udpclient(const std::string& host, int32_t port)
-		: udpsocket() {
+	CUdpClient::CUdpClient(const std::string& host, int32_t port)
+		: CUdpSocket() {
 		struct addrinfo* result = nullptr;
 		struct addrinfo hints;
 

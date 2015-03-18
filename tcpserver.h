@@ -6,13 +6,13 @@
 #include "socket.h"
 #include "tcpsocket.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	class GSNET_API tcpserver : public tcpsocket, public iserver {
+	class GSNET_API CTcpServer : public CTcpSocket, public IServer {
 	public:
-		tcpserver(int32_t port, int32_t connections, ESocketType type = ST_BLOCKING);
+		CTcpServer(int32_t port, int32_t connections, ESocketType type = ST_BLOCKING);
 
-		virtual isocket* accept() override;
+		virtual ISocket* Accept() override;
 	};
 
 }

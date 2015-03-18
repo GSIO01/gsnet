@@ -1,23 +1,22 @@
 #include "tcpserver.h"
 
-#include <netinet/in.h>
-#include <sys/ioctl.h>
-
 #if defined(WIN32) || defined(_MSC_VER)
 
 #else
 
+#include <netinet/in.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 #include <cstring>
 
 #endif
 
 
-namespace gsnet {
+namespace GSNet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-  tcpserver::tcpserver(int32_t port, int32_t connections, ESocketType type /* = ST_BLOCKING */) {
+  CTcpServer::CTcpServer(int32_t port, int32_t connections, ESocketType type /* = ST_BLOCKING */) {
     sockaddr_in sa;
 
     memset(&sa, 0, sizeof (sockaddr_in));
@@ -42,20 +41,20 @@ namespace gsnet {
     listen(_s, connections);
   }
 
-  isocket* tcpserver::accept() {
+  ISocket* CTcpServer::Accept() {
     SOCKET new_sock = ::accept(_s, 0, 0);
 
     if (new_sock == INVALID_SOCKET) {
       return nullptr;
     }
 
-    tcpsocket* r = new tcpsocket(new_sock);
+    CTcpSocket* r = new CTcpSocket(new_sock);
     return r;
   }
 
 #else
 
-  tcpserver::tcpserver(int32_t port, int32_t connections, ESocketType type) {
+  CTcpServer::CTcpServer(int32_t port, int32_t connections, ESocketType type) {
     sockaddr_in sa;
     
     memset(&sa, 0, sizeof(sockaddr_in));
@@ -80,14 +79,14 @@ namespace gsnet {
     listen(_s, connections);
   }
   
-  isocket* tcpserver::accept() {
+  ISocket* CTcpServer::Accept() {
     int32_t new_sock = ::accept(_s, 0, 0);
     
     if(new_sock == -1) {
       return nullptr;
     }
     
-    tcpsocket* r = new tcpsocket(new_sock);
+    CTcpSocket* r = new CTcpSocket(new_sock);
     return r;
   }
 

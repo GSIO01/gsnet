@@ -5,48 +5,48 @@
 
 #include <cinttypes>
 
-namespace gsnet {
+namespace GSNet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-	class init {
+	class CInit {
 	public:
-		virtual ~init() { }
+		virtual ~CInit() { }
 
-		static init* instance() {
+		static CInit* Instance() {
 			return &_s_instance;
 		}
 
-		bool start();
-		void end();
+		bool Start();
+		void End();
 
 	protected:
-		init() : _nofSockets(0) { }
+		CInit() : _nofSockets(0) { }
 
-		static init _s_instance;
+		static CInit _s_instance;
 		int32_t _nofSockets;
 	};
 
 #else
 
-	class init {
+	class CInit {
 	public:
-		virtual ~init() { }
+		virtual ~CInit() { }
 
-		static init* instance() {
+		static CInit* Instance() {
 			return &_s_instance;
 		}
 
-		bool start() {
+		bool Start() {
 			return true;
 		}
 		
-		void end() { }
+		void End() { }
 
 	protected:
-		init() {}
+		CInit() {}
                 
-                static init _s_instance;
+                static CInit _s_instance;
 	};
 
 #endif

@@ -7,12 +7,12 @@
 #include <netdb.h>
 #endif
 
-namespace gsnet {
+namespace GSNet {
 
 #if defined(WIN32) || defined(_MSC_VER)
 
-  tcpclient::tcpclient(const std::string& host, int32_t port)
-  : tcpsocket() {
+  CTcpClient::CTcpClient(const std::string& host, int32_t port)
+  : CTcpSocket() {
     struct addrinfo* result = nullptr;
     struct addrinfo hints;
 
@@ -37,8 +37,8 @@ namespace gsnet {
 
 #else
 
-  tcpclient::tcpclient(const std::string& host, int32_t port) 
-  : tcpsocket() {
+  CTcpClient::CTcpClient(const std::string& host, int32_t port) 
+  : CTcpSocket() {
     struct addrinfo* result;
     struct addrinfo hints;
     

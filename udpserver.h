@@ -6,13 +6,13 @@
 #include "socket.h"
 #include "udpsocket.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	class GSNET_API udpserver : public udpsocket, public iserver {
+	class GSNET_API CUdpServer : public CUdpSocket, public IServer {
 	public:
-		udpserver(int32_t port, int32_t connections, ESocketType type = ST_BLOCKING);
+		CUdpServer(int32_t port, int32_t connections, ESocketType type = ST_BLOCKING);
 
-		virtual isocket* accept() override;
+		virtual ISocket* Accept() override;
 	};
 
 }

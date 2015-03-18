@@ -14,33 +14,20 @@
 
 #endif
 
-namespace gsnet {
+namespace GSNet {
 
-#if defined(WIN32) || defined(_MSC_VER) 
+  class GSNET_API CUdpSelect : public ISelect {
+  public:
+    CUdpSelect(const CUdpSocket* const s1, const CUdpSocket* const s2 = nullptr, ESocketType type = ST_BLOCKING);
 
-	class GSNET_API udpselect : public iselect {
-	public:
-		udpselect(const udpsocket* const s1, const udpsocket* const s2 = nullptr, ESocketType type = ST_BLOCKING);
+    virtual bool Readable(const ISocket* const s) override;
+    virtual bool HasError() const override;
+    virtual ESocketError GetLastError() const override;
 
-		virtual bool readable(const isocket* const s) override;
-
-	private:
-		fd_set _fds;
-	};
-
-#else
-
-	class GSNET_API udpselect : public iselect {
-	public:
-		udpselect(const udpsocket* const s1, const udpsocket* const s2 = nullptr, ESocketType type = ST_BLOCKING);
-
-		virtual bool readable(const isocket* const s) override;
-
-	private:
-		fd_set _fds;
-	};
-
-#endif
+  private:
+    fd_set _fds;
+    ESocketError _lastError;
+  };
 
 }
 

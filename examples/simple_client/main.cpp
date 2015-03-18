@@ -6,14 +6,22 @@
 #include "tcpclient.h"
 
 int32_t main(int32_t argc, char* argv[]) {
-	gsnet::tcpclient s("www.google.com", 80);
+	GSNet::CTcpClient s("www.google.com", 80);
 
-	s.sendLine("GET / HTTP/1.0");
-	s.sendLine("Host: www.google.com");
-	s.sendLine("");
+  if (s.HasError()) {
+    return EXIT_FAILURE;
+  }
+
+  if (s.SendLine("GET / HTTP/1.0") > SE_SUCCESS || s.SendLine("Host: www.google.com") > SE_SUCCESS || s.SendLine("") > SE_SUCCESS) {
+    return EXIT_FAILURE;
+  }
 
 	for (;;) {
-		std::string l = s.receiveLine();
+		std::string l = s.ReceiveLine();
+
+    if (s.HasError()) {
+      return EXIT_FAILURE;
+    }
 
 		if (l.empty()) {
 			break;

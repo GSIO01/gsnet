@@ -5,11 +5,11 @@
 #include "tcpsocket.h"
 #include "client.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	class GSNET_API tcpclient : public tcpsocket, public iclient {
+	class GSNET_API CTcpClient : public CTcpSocket, public IClient {
 	public:
-		tcpclient(const std::string& host, int32_t port);
+		CTcpClient(const std::string& host, int32_t port);
 	};
 
 }

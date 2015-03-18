@@ -3,18 +3,18 @@
 
 #include "gsnet.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	class isocket;
+	class ISocket;
 
-	class GSNET_API iserver {
+	class GSNET_API IServer {
 	public:
-		virtual ~iserver() { }
+		virtual ~IServer() { }
 
-		virtual isocket* accept() = 0;
+		virtual ISocket* Accept() = 0;
 
 	protected:
-		iserver() { }
+		IServer() { }
 	};
 
 }

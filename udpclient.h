@@ -5,11 +5,11 @@
 #include "udpsocket.h"
 #include "client.h"
 
-namespace gsnet {
+namespace GSNet {
 
-	class GSNET_API udpclient : public udpsocket, public iclient {
+	class GSNET_API CUdpClient : public CUdpSocket, public IClient {
 	public:
-		udpclient(const std::string& host, int32_t port);
+		CUdpClient(const std::string& host, int32_t port);
 	};
 
 }
