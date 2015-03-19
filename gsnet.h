@@ -19,6 +19,14 @@
 #ifndef _GSNET_H
 #define _GSNET_H
 
+#if !defined(WIN32) && !defined(_MSC_VER)
+
+typedef int32_t SOCKET;
+static const int32_t SOCKET_ERROR = -1;
+static const int32_t INVALID_SOCKET = -1;
+
+#endif
+
 enum ESocketError {
 	SE_SUCCESS,
 	SE_ERROR,
@@ -30,7 +38,8 @@ enum ESocketError {
   SE_ERROR_CREATE,
   SE_ERROR_BIND,
   SE_ERROR_LISTEN,
-  SE_ERROR_SELECT
+  SE_ERROR_SELECT,
+  SE_ERROR_GETADDR
 };
 
 #endif /* _GSNET_H */

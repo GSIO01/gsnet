@@ -13,34 +13,6 @@
 
 namespace GSNet {
 
-#if defined(WIN32) || defined(_MSC_VER)
-
-	CUdpClient::CUdpClient(const std::string& host, int32_t port)
-		: CUdpSocket() {
-		struct addrinfo* result = nullptr;
-		struct addrinfo hints;
-
-		ZeroMemory(&hints, sizeof(addrinfo));
-		hints.ai_family = AF_UNSPEC;
-		hints.ai_socktype = SOCK_DGRAM;
-		hints.ai_protocol = IPPROTO_UDP;
-
-		if (getaddrinfo(host.c_str(), std::to_string(port).c_str(), &hints, &result) != 0) {
-			return;
-		}
-
-		sockaddr_in addr;
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(port);
-		addr.sin_addr = ((sockaddr_in*)result->ai_addr)->sin_addr;
-		memset(&addr.sin_zero, 0, 8);
-
-		if (connect(_s, (sockaddr*)&addr, sizeof(sockaddr))) {
-		}
-	}
-
-#else
-
 	CUdpClient::CUdpClient(const std::string& host, int32_t port)
 		: CUdpSocket() {
 		struct addrinfo* result = nullptr;
@@ -51,7 +23,8 @@ namespace GSNet {
 		hints.ai_socktype = SOCK_DGRAM;
 		hints.ai_protocol = IPPROTO_UDP;
 
-		if (getaddrinfo(host.c_str(), std::to_string(port).c_str(), &hints, &result) != 0) {
+		if (getaddrinfo(host.c_str(), std::to_string(port).c_str(), &hints, &result) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_GETADDR;
 			return;
 		}
 
@@ -61,10 +34,9 @@ namespace GSNet {
 		addr.sin_addr = ((sockaddr_in*)result->ai_addr)->sin_addr;
 		memset(&addr.sin_zero, 0, 8);
 
-		if (connect(_s, (sockaddr*)&addr, sizeof(sockaddr))) {
+		if (connect(_s, (sockaddr*)&addr, sizeof(sockaddr)) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_CONNECT;
 		}
 	}
-
-#endif
 
 }

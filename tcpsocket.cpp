@@ -11,11 +11,12 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 
+int32_t(*closesocket)(SOCKET s) = close;
+int32_t(*ioctlsocket)(SOCKET s, long cmd, int32_t* argp) = ioctl;
+
 #endif
 
 namespace GSNet {
-
-#if defined(WIN32) || defined(_MSC_VER)
 
   CTcpSocket::CTcpSocket() : _s(0), _lastError(SE_SUCCESS) {
     CInit::Instance()->Start();
@@ -164,147 +165,5 @@ namespace GSNet {
   ESocketError CTcpSocket::GetLastError() const {
     return _lastError;
   }
-
-#else
-
-  CTcpSocket::CTcpSocket() : _s(0), _lastError(SE_SUCCESS) {
-    _s = socket(AF_INET, SOCK_STREAM, 0);
-    if (_s == -1) {
-      _lastError = SE_ERROR_CREATE;
-      return;
-    }
-
-    _refCounter = new int32_t(1);
-  }
-
-  CTcpSocket::CTcpSocket(int32_t s) : _s(s), _lastError(SE_SUCCESS) {
-    _refCounter = new int32_t(1);
-  }
-
-  CTcpSocket::~CTcpSocket() {
-    if (--(*_refCounter) == 0) {
-      Close();
-      delete _refCounter;
-    }
-  }
-
-  CTcpSocket::CTcpSocket(const CTcpSocket& other) {
-    _refCounter = other._refCounter;
-    (*_refCounter)++;
-    _s = other._s;
-    _lastError = other._lastError;
-  }
-
-  CTcpSocket& CTcpSocket::operator=(const CTcpSocket& rhs) {
-    (*rhs._refCounter)++;
-    _refCounter = rhs._refCounter;
-    _s = rhs._s;
-    _lastError = rhs._lastError;
-
-    return *this;
-  }
-
-  ESocketError CTcpSocket::Close() {
-    if(close(_s) == -1) {
-      _lastError = SE_ERROR_CLOSE;
-      return SE_ERROR_CLOSE;
-    }
-
-    _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
-  }
-
-  std::string CTcpSocket::ReceiveBytes() {
-    std::string ret;
-    char buffer[1024];
-
-    for (;;) {
-      int32_t arg = 0;
-
-      if (ioctl(_s, FIONREAD, &arg) == -1) {
-        _lastError = SE_ERROR_IOCTL;
-        return "";
-      }
-
-      if (arg == 0) {
-        break;
-      }
-
-      if (arg > 1024) {
-        arg = 1024;
-      }
-
-      int32_t rv = recv(_s, buffer, arg, 0);
-      if (rv == 0) {
-        break;
-      } else if(rv == -1) {
-        _lastError = SE_ERROR_RECV;
-        return "";
-      }
-
-      std::string t;
-      t.assign(buffer, rv);
-      ret += t;
-    }
-
-    _lastError = SE_SUCCESS;
-    return ret;
-  }
-
-  std::string CTcpSocket::ReceiveLine() {
-    std::string ret;
-
-    for (;;) {
-      char r;
-
-      switch (recv(_s, &r, 1, 0)) {
-      case 0:
-        return ret;
-      case -1:
-        _lastError = SE_ERROR_RECV;
-        return "";
-      }
-
-      ret += r;
-      if (r == '\n') {
-        _lastError = SE_SUCCESS;
-        return ret;
-      }
-    }
-
-    _lastError = SE_SUCCESS;
-    return ret;
-  }
-
-  ESocketError CTcpSocket::SendLine(std::string line) {
-    line += '\n';
-    if(send(_s, line.c_str(), line.length(), 0) == -1) {
-      _lastError = SE_ERROR_SEND;
-      return SE_ERROR_SEND;
-    }
-
-    _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
-  }
-
-  ESocketError CTcpSocket::SendBytes(const std::string& bytes) {
-    if(send(_s, bytes.c_str(), bytes.length(), 0) == -1) {
-      _lastError = SE_ERROR_SEND;
-      return SE_ERROR_SEND;
-    }
-
-    _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
-  }
-
-  bool CTcpSocket::HasError() const {
-    return (_lastError != SE_SUCCESS);
-  }
-
-  ESocketError CTcpSocket::GetLastError() const {
-    return _lastError;
-  }
-
-#endif
 
 }
