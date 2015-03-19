@@ -1,6 +1,6 @@
 #include "udpclient.h"
 
-#if defined(WIN32) || defined(_MSC_VER)
+#if defined(WIN32) | defined(_MSC_VER)
 
 #include <WS2tcpip.h>
 

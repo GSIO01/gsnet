@@ -1,16 +1,14 @@
 #include "tcpserver.h"
 
-#if defined(WIN32) || defined(_MSC_VER)
-
-#else
+#if !defined(WIN32) & !defined(_MSC_VER)
 
 #include <netinet/in.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <cstring>
 
-int32_t(*closesocket)(SOCKET s) = close;
-int32_t(*ioctlsocket)(SOCKET s, long cmd, int32_t* argp) = ioctl;
+static int32_t(*closesocket)(int32_t s) = close;
+static int32_t(*ioctlsocket)(int32_t s, unsigned long cmd, ...) = ioctl;
 
 #endif
 

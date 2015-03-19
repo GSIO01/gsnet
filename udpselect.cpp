@@ -1,6 +1,6 @@
 #include "udpselect.h"
 
-#if !defined(WIN32) && !defined(_MSC_VER)
+#if !defined(WIN32) & !defined(_MSC_VER)
 
 typedef timeval TIMEVAL;
 

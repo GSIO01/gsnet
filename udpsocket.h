@@ -9,7 +9,7 @@
 
 namespace GSNet {
 
-#if defined(WIN32) || defined(_MSC_VER)
+#if defined(WIN32) | defined(_MSC_VER)
 
 	class GSNET_API CUdpSocket : public ISocket {
 	public:

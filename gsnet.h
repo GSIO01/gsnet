@@ -1,4 +1,4 @@
-#if defined(WIN32) || defined(_MSC_VER)
+#if defined(WIN32) | defined(_MSC_VER)
 
 #ifdef GSNET_EXPORTS
 #define GSNET_API __declspec(dllexport)
@@ -19,7 +19,7 @@
 #ifndef _GSNET_H
 #define _GSNET_H
 
-#if !defined(WIN32) && !defined(_MSC_VER)
+#if !defined(WIN32) & !defined(_MSC_VER)
 
 typedef int32_t SOCKET;
 static const int32_t SOCKET_ERROR = -1;

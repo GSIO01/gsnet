@@ -4,15 +4,13 @@
 
 #include "init.h"
 
-#if defined(WIN32) || defined(_MSC_VER)
-
-#else
+#if !defined(WIN32) & !defined(_MSC_VER)
 
 #include <unistd.h>
 #include <sys/ioctl.h>
 
-int32_t(*closesocket)(SOCKET s) = close;
-int32_t(*ioctlsocket)(SOCKET s, long cmd, int32_t* argp) = ioctl;
+static int32_t(*closesocket)(int32_t s) = close;
+static int32_t(*ioctlsocket)(int32_t s, unsigned long cmd, ...) = ioctl;
 
 #endif
 

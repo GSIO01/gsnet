@@ -4,7 +4,7 @@ namespace GSNet {
 
 	CInit CInit::_s_instance;
 
-#if defined(WIN32) || defined(_MSC_VER)
+#if defined(WIN32) | defined(_MSC_VER)
 
 	bool CInit::Start() {
 		if (_nofSockets == 0) {
