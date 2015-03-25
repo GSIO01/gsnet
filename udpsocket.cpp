@@ -114,6 +114,46 @@ namespace GSNet {
 		return ret;
 	}
 
+  size_t CUdpSocket::ReceiveBytes(byte** buf) {
+    std::string rb;
+    char buffer[1024];
+
+    for (;;) {
+      u_long arg = 0;
+
+      if (ioctlsocket(_s, FIONREAD, &arg) == SOCKET_ERROR) {
+        _lastError = SE_ERROR_IOCTL;
+        return 0;
+      }
+
+      if (arg == 0) {
+        break;
+      }
+
+      if (arg > 1024) {
+        arg = 1024;
+      }
+
+      int32_t rv = recv(_s, buffer, arg, 0);
+      if (rv == 0) {
+        break;
+      } else if (rv == SOCKET_ERROR) {
+        _lastError = SE_ERROR_RECV;
+        return 0;
+      }
+
+      std::string t;
+      t.assign(buffer, rv);
+      rb += t;
+    }
+
+    *buf = new byte[rb.length()];
+    memcpy(*buf, rb.c_str(), rb.length());
+
+    _lastError = SE_SUCCESS;
+    return rb.length();
+  }
+
 	std::string CUdpSocket::ReceiveLine() {
 		std::string ret;
 
@@ -159,6 +199,16 @@ namespace GSNet {
     _lastError = SE_SUCCESS;
     return SE_SUCCESS;
 	}
+
+  ESocketError CUdpSocket::SendBytes(const byte* bytes, size_t size) {
+    if (send(_s, (const char*)bytes, size, 0) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_SEND;
+      return SE_ERROR_SEND;
+    }
+
+    _lastError = SE_SUCCESS;
+    return SE_SUCCESS;
+  }
 
   bool CUdpSocket::HasError() const {
     return (_lastError != SE_SUCCESS);

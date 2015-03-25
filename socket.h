@@ -20,9 +20,11 @@ namespace GSNet {
 
 		virtual std::string ReceiveLine() = 0;
 		virtual std::string ReceiveBytes() = 0;
+    virtual size_t ReceiveBytes(byte** buffer) = 0;
 		virtual ESocketError Close() = 0;
 		virtual ESocketError SendLine(std::string line) = 0;
 		virtual ESocketError SendBytes(const std::string& bytes) = 0;
+    virtual ESocketError SendBytes(const byte* bytes, size_t size) = 0;
 		virtual bool HasError() const = 0;
 		virtual ESocketError GetLastError() const = 0;
 
