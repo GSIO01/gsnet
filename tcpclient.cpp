@@ -1,15 +1,17 @@
 #include "tcpclient.h"
 
-#if defined(WIN32) || defined(_MSC_VER)
+#if defined(WIN32) | defined(_MSC_VER)
+
 #include <WS2tcpip.h>
+
 #else
+
 #include <cstring>
 #include <netdb.h>
+
 #endif
 
 namespace GSNet {
-
-#if defined(WIN32) || defined(_MSC_VER)
 
   CTcpClient::CTcpClient(const std::string& host, int32_t port) : CTcpSocket() {
     struct addrinfo* result = nullptr;
@@ -35,14 +37,5 @@ namespace GSNet {
       _lastError = SE_ERROR_CONNECT;
     }
   }
-
-#else
-
-
-  }
-
-  // TODO POSIX implementation
-
-#endif
-
+ 
 }

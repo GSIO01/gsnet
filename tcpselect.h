@@ -6,9 +6,7 @@
 #include "socket.h"
 #include "tcpsocket.h"
 
-#if defined(WIN32) || defined(_MSC_VER)
-
-#else
+#if !defined(WIN32) & !defined(_MSC_VER)
 
 #include <sys/select.h>
 
