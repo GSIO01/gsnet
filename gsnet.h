@@ -24,15 +24,18 @@
  *
  */
 
+#pragma once
 #if defined(WIN32) | defined(_MSC_VER)
 
 #ifdef GSNET_EXPORTS
 
 #define GSNET_API __declspec(dllexport)
+#define GSNET_EXPIMP_TEMPLATE
 
 #else
 
 #define GSNET_API __declspec(dllimport)
+#define GSNET_EXPIMP_TEMPLATE extern
 
 #endif
 

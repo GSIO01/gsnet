@@ -39,17 +39,25 @@
 static int32_t(*closesocket)(int32_t s) = close;
 static int32_t(*ioctlsocket)(int32_t s, unsigned long cmd, ...) = ioctl;
 
+#else
+
+#include <WS2tcpip.h>
+
 #endif
 
 
 namespace GSNet {
 
-  CUdpSocket::CUdpSocket() : _s(0), _lastError(SE_SUCCESS) {
+  CUdpSocket::CUdpSocket()
+    : _s(0)
+    , _lastError(SE_SUCCESS)
+  {
     CInit::Instance()->Start();
 
     _s = socket(AF_INET, SOCK_DGRAM, 0);
 
-    if (_s == INVALID_SOCKET) {
+    if(_s == INVALID_SOCKET)
+    {
       _lastError = SE_ERROR_CREATE;
       return;
     }
@@ -57,28 +65,103 @@ namespace GSNet {
     _refCounter = new int32_t(1);
   }
 
-  CUdpSocket::CUdpSocket(SOCKET s) : _s(s), _lastError(SE_SUCCESS) {
+
+  CUdpSocket::CUdpSocket(SOCKET s)
+    : _s(s)
+    , _lastError(SE_SUCCESS)
+  {
     CInit::Instance()->Start();
     _refCounter = new int32_t(1);
   }
 
+
   CUdpSocket::~CUdpSocket() {
     if (--(*_refCounter) == 0) {
-      Close();
+      CUdpSocket::Close();
       delete _refCounter;
     }
 
     CInit::Instance()->End();
   }
 
-  CUdpSocket::CUdpSocket(const CUdpSocket& other) {
-    _refCounter = other._refCounter;
+
+  CUdpSocket::CUdpSocket(const std::string& host, uint16_t port, ESocketType type)
+  {
+    CInit::Instance()->Start();
+
+    _s = socket(AF_INET, SOCK_DGRAM, 0);
+
+    if (_s == INVALID_SOCKET)
+    {
+      _lastError = SE_ERROR_CREATE;
+      return;
+    }
+
+    u_long arg = type == ST_BLOCKING ? 0 : 1;
+    if (ioctlsocket(_s, FIONBIO, &arg) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_IOCTL;
+      return;
+    }
+
+    struct addrinfo* result = nullptr;
+    struct addrinfo hints;
+
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_TCP;
+
+    if (getaddrinfo(host.c_str(), std::to_string(port).c_str(), &hints, &result) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_GETADDR;
+      return;
+    }
+
+    sockaddr_in addr;
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(port);
+    addr.sin_addr = reinterpret_cast<sockaddr_in*>(result->ai_addr)->sin_addr;
+    memset(&addr.sin_zero, 0, 8);
+
+    if (connect(_s, reinterpret_cast<sockaddr*>(&addr), sizeof(sockaddr)) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_CONNECT;
+    }
+
+    _refCounter = new int32_t(1);
+  }
+
+
+  CUdpSocket::CUdpSocket(CUdpSocket&& other) noexcept
+    : _s(other._s)
+    , _refCounter(std::move(other._refCounter))
+    , _lastError(other._lastError)
+  {
+    CInit::Instance()->Start();
+  }
+
+
+  CUdpSocket& CUdpSocket::operator=(CUdpSocket&& rhs) noexcept
+  {
+    (*rhs._refCounter)++;
+    _refCounter = std::move(_refCounter);
+    _s = rhs._s;
+    _lastError = rhs._lastError;
+
+    CInit::Instance()->Start();
+
+    return *this;
+  }
+
+
+  CUdpSocket::CUdpSocket(const CUdpSocket& other)
+    : _s(other._s)
+    , _refCounter(other._refCounter)
+    , _lastError(other._lastError)
+  {
     (*_refCounter)++;
-    _s = other._s;
-    _lastError = other._lastError;
 
     CInit::Instance()->Start();
   }
+
 
   CUdpSocket& CUdpSocket::operator=(const CUdpSocket& rhs) {
     (*rhs._refCounter)++;
@@ -91,14 +174,14 @@ namespace GSNet {
     return *this;
   }
 
-  ESocketError CUdpSocket::Close() {
+  bool CUdpSocket::Close() {
     if (closesocket(_s) == SOCKET_ERROR) {
       _lastError = SE_ERROR_CLOSE;
-      return SE_ERROR_CLOSE;
+      return false;
     }
 
     _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
+    return true;
   }
 
   std::string CUdpSocket::ReceiveBytes() {
@@ -234,48 +317,48 @@ namespace GSNet {
   }
 
 
-  ESocketError CUdpSocket::SendString(std::string str)
+  bool CUdpSocket::SendString(const std::string& str)
   {
     if(send(_s, str.c_str(), str.length() + 1, 0) == SOCKET_ERROR)
     {
       _lastError = SE_ERROR_SEND;
-      return SE_ERROR_SEND;
+      return false;
     }
 
     _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
+    return true;
   }
 
 
-  ESocketError CUdpSocket::SendLine(std::string line) {
-    line += '\n';
-    if (send(_s, line.c_str(), line.length(), 0) == SOCKET_ERROR) {
+  bool CUdpSocket::SendLine(const std::string& line) {
+    auto cline = line + '\n';
+    if (send(_s, cline.c_str(), cline.length(), 0) == SOCKET_ERROR) {
       _lastError = SE_ERROR_SEND;
-      return SE_ERROR_SEND;
+      return false;
     }
 
     _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
+    return true;
   }
 
-  ESocketError CUdpSocket::SendBytes(const std::string& bytes) {
+  bool CUdpSocket::SendBytes(const std::string& bytes) {
     if (send(_s, bytes.c_str(), bytes.length(), 0) == SOCKET_ERROR) {
       _lastError = SE_ERROR_SEND;
-      return SE_ERROR_SEND;
+      return false;
     }
 
     _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
+    return true;
   }
 
-  ESocketError CUdpSocket::SendBytes(const byte* bytes, size_t size) {
+  bool CUdpSocket::SendBytes(const byte* bytes, size_t size) {
     if (send(_s, reinterpret_cast<const char*>(bytes), size, 0) == SOCKET_ERROR) {
       _lastError = SE_ERROR_SEND;
-      return SE_ERROR_SEND;
+      return false;
     }
 
     _lastError = SE_SUCCESS;
-    return SE_SUCCESS;
+    return true;
   }
 
   bool CUdpSocket::HasError() const {

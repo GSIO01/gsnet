@@ -33,24 +33,28 @@
 #include <string>
 #include <cinttypes>
 
+
 namespace GSNet {
 
   class GSNET_API CTcpSocket : public ISocket {
   public:
+    CTcpSocket(const std::string& host, uint16_t port, ESocketType type = ST_BLOCKING);
     CTcpSocket(const CTcpSocket& other);
+    CTcpSocket(CTcpSocket&& other) noexcept;
     virtual ~CTcpSocket();
 
     CTcpSocket& operator=(const CTcpSocket& rhs);
+    CTcpSocket& operator=(CTcpSocket&& rhs) noexcept;
 
     virtual std::string ReceiveLine() override;
     virtual std::string ReceiveString() override;
     virtual std::string ReceiveBytes() override;
     virtual size_t ReceiveBytes(byte** buffer) override;
-    virtual ESocketError Close() override;
-    virtual ESocketError SendLine(std::string line) override;
-    virtual ESocketError SendString(std::string str) override;
-    virtual ESocketError SendBytes(const std::string& bytes) override;
-    virtual ESocketError SendBytes(const byte* bytes, size_t size) override;
+    virtual bool Close() override;
+    virtual bool SendLine(const std::string& line) override;
+    virtual bool SendString(const std::string& str) override;
+    virtual bool SendBytes(const std::string& bytes) override;
+    virtual bool SendBytes(const byte* bytes, size_t size) override;
     virtual bool HasError() const override;
     virtual ESocketError GetLastError() const override;
 
@@ -58,7 +62,7 @@ namespace GSNet {
     friend class CTcpServer;
     friend class CTcpSelect;
 
-    CTcpSocket(SOCKET s);
+    explicit CTcpSocket(SOCKET s);
     CTcpSocket();
 
     SOCKET _s;

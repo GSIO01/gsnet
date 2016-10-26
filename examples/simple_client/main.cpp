@@ -40,7 +40,7 @@ int32_t main(int32_t argc, char* argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (s.SendLine("GET / HTTP/1.0") > SE_SUCCESS || s.SendLine("Host: duckduckgo.com") > SE_SUCCESS || s.SendLine("") > SE_SUCCESS) {
+  if (!s.SendLine("GET / HTTP/1.0") || !s.SendLine("Host: duckduckgo.com") || !s.SendLine("")) {
     return EXIT_FAILURE;
   }
 
