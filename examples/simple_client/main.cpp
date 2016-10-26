@@ -30,6 +30,8 @@
 #include <iostream>
 
 #include "tcpclient.h"
+#include <thread>
+
 
 int32_t main(int32_t argc, char* argv[]) {
   GSNet::CTcpClient s("duckduckgo.com", 80);

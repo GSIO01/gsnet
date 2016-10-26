@@ -39,7 +39,13 @@
 
 namespace GSNet {
 
-  CTcpClient::CTcpClient(const std::string& host, int32_t port) : CTcpSocket() {
+  CTcpClient::CTcpClient(const std::string& host, int32_t port, ESocketType type) : CTcpSocket() {
+    u_long arg = type == ST_BLOCKING ? 0 : 1;
+    if (ioctlsocket(_s, FIONBIO, &arg) == SOCKET_ERROR) {
+      _lastError = SE_ERROR_IOCTL;
+      return;
+    }
+
     struct addrinfo* result = nullptr;
     struct addrinfo hints;
 

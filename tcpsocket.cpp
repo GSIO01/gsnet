@@ -27,7 +27,6 @@
 #include "tcpsocket.h"
 
 #include <iostream>
-#include <cstring>
 
 #include "init.h"
 
@@ -123,7 +122,9 @@ namespace GSNet {
       int32_t rv = recv(_s, buffer, arg, 0);
       if (rv == 0) {
         break;
-      } else if (rv == SOCKET_ERROR) {
+      }
+      
+      if (rv == SOCKET_ERROR) {
         _lastError = SE_ERROR_RECV;
         return "";
       }
@@ -160,7 +161,9 @@ namespace GSNet {
       int32_t rv = recv(_s, buffer, arg, 0);
       if (rv == 0) {
         break;
-      } else if (rv == SOCKET_ERROR) {
+      }
+      
+      if (rv == SOCKET_ERROR) {
         _lastError = SE_ERROR_RECV;
         return 0;
       }
@@ -189,6 +192,8 @@ namespace GSNet {
       case -1:
         _lastError = SE_ERROR_RECV;
         return "";
+      default:
+        break;
       }
 
       ret += r;
@@ -197,10 +202,48 @@ namespace GSNet {
         return ret;
       }
     }
+  }
+
+
+  std::string CTcpSocket::ReceiveString()
+  {
+    std::string ret;
+
+    for (;;) {
+      char r;
+
+      switch (recv(_s, &r, 1, 0)) {
+      case 0:
+        return ret;
+      case -1:
+        _lastError = SE_ERROR_RECV;
+        return "";
+      default:
+        break;
+      }
+            
+      if (r == '\0') {
+        _lastError = SE_SUCCESS;
+        return ret;
+      }
+
+      ret += r;
+    }
+  }
+
+
+  ESocketError CTcpSocket::SendString(std::string str)
+  {
+    if(send(_s, str.c_str(), str.length() + 1, 0) == SOCKET_ERROR)
+    {
+      _lastError = SE_ERROR_SEND;
+      return SE_ERROR_SEND;
+    }
 
     _lastError = SE_SUCCESS;
-    return ret;
+    return SE_SUCCESS;
   }
+
 
   ESocketError CTcpSocket::SendLine(std::string line) {
     line += '\n';
@@ -224,7 +267,7 @@ namespace GSNet {
   }
 
   ESocketError CTcpSocket::SendBytes(const byte* bytes, size_t size) {
-    if (send(_s, (const char*)bytes, size, 0) == SOCKET_ERROR) {
+    if (send(_s, reinterpret_cast<const char*>(bytes), size, 0) == SOCKET_ERROR) {
       _lastError = SE_ERROR_SEND;
       return SE_ERROR_SEND;
     }
@@ -234,7 +277,7 @@ namespace GSNet {
   }
 
   bool CTcpSocket::HasError() const {
-    return (_lastError != SE_SUCCESS);
+    return _lastError != SE_SUCCESS;
   }
 
   ESocketError CTcpSocket::GetLastError() const {

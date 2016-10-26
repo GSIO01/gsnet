@@ -43,10 +43,12 @@ namespace GSNet {
     CTcpSocket& operator=(const CTcpSocket& rhs);
 
     virtual std::string ReceiveLine() override;
+    virtual std::string ReceiveString() override;
     virtual std::string ReceiveBytes() override;
     virtual size_t ReceiveBytes(byte** buffer) override;
     virtual ESocketError Close() override;
     virtual ESocketError SendLine(std::string line) override;
+    virtual ESocketError SendString(std::string str) override;
     virtual ESocketError SendBytes(const std::string& bytes) override;
     virtual ESocketError SendBytes(const byte* bytes, size_t size) override;
     virtual bool HasError() const override;

@@ -35,7 +35,7 @@ namespace GSNet {
 
   class GSNET_API CTcpClient : public CTcpSocket, public IClient {
   public:
-    CTcpClient(const std::string& host, int32_t port);
+    CTcpClient(const std::string& host, int32_t port, ESocketType type = ST_BLOCKING);
   };
 
 }

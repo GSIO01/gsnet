@@ -35,7 +35,7 @@ namespace GSNet {
 
   class GSNET_API CUdpClient : public CUdpSocket, public IClient {
   public:
-    CUdpClient(const std::string& host, int32_t port);
+    CUdpClient(const std::string& host, int32_t port, ESocketType type = ST_BLOCKING);
   };
 
 }
